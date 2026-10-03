@@ -77,3 +77,8 @@ killall Finder
 3. Set the URL to: `https://<worker-name>.<subdomain>.workers.dev/opds`.
 4. Enter your configured username and password.
 5. Browse books by embedded title and author, and tap to download directly to your device.
+
+## Attribution
+
+This project is built upon the foundation of [abersheeran/r2-webdav](https://github.com/abersheeran/r2-webdav).
+
