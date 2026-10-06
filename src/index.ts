@@ -889,7 +889,10 @@ function parseBookMeta(key: string): { title: string; author: string } {
 	}
 	const dirParts = key.split('/');
 	if (dirParts.length >= 2) {
-		return { author: dirParts[dirParts.length - 2].trim(), title: nameWithoutExt.trim() };
+		const parentDir = dirParts[dirParts.length - 2].trim();
+		if (parentDir.toLowerCase() !== 'ebooks') {
+			return { author: parentDir, title: nameWithoutExt.trim() };
+		}
 	}
 	return { author: 'Unknown Author', title: nameWithoutExt.trim() };
 }
@@ -900,7 +903,7 @@ async function handle_opds(request: Request, bucket: R2Bucket): Promise<Response
 	const searchQuery = url.searchParams.get('q')?.toLowerCase();
 
 	let entries: string[] = [];
-	for await (const object of listAll(bucket, '', true)) {
+	for await (const object of listAll(bucket, 'Ebooks/', true)) {
 		if (
 			object.key.endsWith('/') ||
 			object.key.split('/').some((part) => part.startsWith('.') || part.startsWith('._'))
